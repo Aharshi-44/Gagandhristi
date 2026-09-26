@@ -569,4 +569,4 @@ Gagandristhi V2/
 
 ## 👨‍💻 Contributing & License
 Developed for advanced satellite intelligence research and hackathon demonstration.  
-Licensed under the **MIT License**.
+Licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
