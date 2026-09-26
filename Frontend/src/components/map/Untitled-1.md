@@ -1,0 +1,31 @@
+```
+└── 📁Backend
+    └── 📁src
+        └── 📁controllers
+            ├── AlertsController.js
+            ├── AuthController.js
+            ├── ProjectController.js
+        └── 📁db
+            ├── DBClient.js
+        └── 📁models
+            ├── AlertChannelCatalogueModel.js
+            ├── AlertModel.js
+            ├── AreaOfInterestModel.js
+            ├── ProjectModel.js
+            ├── RoleTokenModel.js
+            ├── SubscriptionModel.js
+            ├── UserModel.js
+            ├── UsersToProjectModel.js
+        └── 📁services
+            ├── AlertsService.js
+            ├── AlertsSSEService.js
+            ├── ProjectService.js
+        └── 📁types
+            ├── GeoJson.js
+        ├── App.js
+        ├── server.js
+    ├── .env
+    ├── .gitignore
+    ├── package-lock.json
+    └── package.json
+```
