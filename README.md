@@ -1,6 +1,8 @@
 # 🛰️ Gagandristhi V2 (गगनदृष्टि)
 ### Next-Generation Geospatial Intelligence, Multi-Temporal Satellite Change Detection & Real-Time Event Streaming Platform
 
+[![GitHub Repo](https://img.shields.io/badge/GitHub-Aharshi--44%2FGagandhristi-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Aharshi-44/Gagandhristi)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://github.com/Aharshi-44/Gagandhristi/blob/main/LICENSE)
 [![PostgreSQL](https://img.shields.io/badge/PostGIS-16--3.4-336791?style=for-the-badge&logo=postgresql&logoColor=white)](https://postgis.net/)
 [![Apache Kafka](https://img.shields.io/badge/Apache_Kafka-4.1.0_KRaft-231F20?style=for-the-badge&logo=apachekafka&logoColor=white)](https://kafka.apache.org/)
 [![Debezium](https://img.shields.io/badge/Debezium_CDC-2.6.1-red?style=for-the-badge&logo=apache&logoColor=white)](https://debezium.io/)
@@ -140,8 +142,8 @@ If you are on Windows, we provide automated batch scripts that handle Docker set
 ### Step 1: One-Time Automated Setup
 Clone the repository and run the setup wizard:
 ```bash
-git clone https://github.com/<your-username>/Gagandristhi-V2.git
-cd Gagandristhi-V2
+git clone https://github.com/Aharshi-44/Gagandhristi.git
+cd Gagandhristi
 git lfs pull  # Pulls the PyTorch model weights (>100MB) via Git LFS
 ```
 Double-click **`setup.bat`** (or run `.\setup.bat` in PowerShell / Terminal).  
@@ -568,5 +570,6 @@ Gagandristhi V2/
 ---
 
 ## 👨‍💻 Contributing & License
-Developed for advanced satellite intelligence research and hackathon demonstration.  
-Licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+* **Official Repository**: [https://github.com/Aharshi-44/Gagandhristi](https://github.com/Aharshi-44/Gagandhristi)
+* Developed for advanced satellite intelligence research and hackathon demonstration.  
+* Licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
