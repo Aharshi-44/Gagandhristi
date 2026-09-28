@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "Gagan-Dhristi Backend - Pure JavaScript/Express/PostgreSQL",
+  "description": "Gagandhristi Backend - Pure JavaScript/Express/PostgreSQL",
   "main": "src/server.js",
   "type": "module",
   "scripts": {

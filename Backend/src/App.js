@@ -42,7 +42,7 @@ export class App {
 
     initializeControllers() {
         this.app.get('/api/status', (req, res) => {
-            res.json({ message: 'Gagan-Dhristi API is online.' });
+            res.json({ message: 'Gagandhristi API is online.' });
         });
 
         // Register Controllers as the official API endpoints

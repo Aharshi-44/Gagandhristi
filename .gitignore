@@ -1,5 +1,5 @@
 # ============================================================
-# GAGANDRISTHI V2: MASTER .GITIGNORE
+# GAGANDHRISTI: MASTER .GITIGNORE
 # ============================================================
 
 # --- Node.js Dependencies & Builds ---
@@ -11,6 +11,7 @@ Frontend/dist/
 Backend/dist/
 dist-ssr/
 *.local
+package-lock.json
 
 # --- Python Cache & Virtual Environments ---
 __pycache__/
@@ -45,6 +46,8 @@ processing/results/*/
 processing/test_images/geotiff_test/
 processing/test_images/mask_*.png
 processing/test_images/overlay_*.png
+processing/test_images/prev_img/
+processing/test_images/[0-9]*.png
 
 # --- Database & Container Volume Persistence ---
 postgres_data/

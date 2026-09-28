@@ -61,7 +61,7 @@ PROCESSING_PUBLIC_URL = os.getenv(
 # ============================================================
 
 app = FastAPI(
-    title="Gagandristhi V2 Multi-Model Processing API",
+    title="Gagandhristi Multi-Model Processing API",
     description=(
         "Satellite multi-temporal change detection service supporting "
         "Structural Changes (Siamese U-Net), Vegetation Clearance (NDVI/VARI), "
@@ -76,7 +76,7 @@ app = FastAPI(
 # ============================================================
 
 print("\n==========================================")
-print(" GAGANDRISTHI V2 PROCESSING API (MULTI-MODEL)")
+print(" GAGANDHRISTI PROCESSING API (MULTI-MODEL)")
 print("==========================================")
 
 processor = ChangeProcessor()
@@ -91,7 +91,7 @@ print("[OK] Processing engine ready with 3 analytical channels")
 @app.get("/")
 def root():
     return {
-        "service": "Gagandristhi V2 Multi-Model Processing API",
+        "service": "Gagandhristi Multi-Model Processing API",
         "status": "running",
         "supported_channels": [
             {
@@ -450,9 +450,9 @@ def get_catalog():
     Lists all indexed satellite tiles in the semantic retrieval catalog.
     """
     engine = get_retrieval_engine()
-    tiles = engine.get_catalog_summary()
+    tiles = engine.get_catalog_summary(limit=50)
     return {
         "status": "success",
-        "catalog_size": len(tiles),
+        "catalog_size": engine.catalog_size,
         "tiles": tiles
     }

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref, onMounted } from 'vue';
 import { ApiClient } from '@/api/backendAPIendpoint.js';
 
 const emit = defineEmits(['close']);
@@ -9,8 +9,12 @@ const apiClient = ApiClient.getInstance();
 // ============================================================
 // PANEL STATE & DRAG
 // ============================================================
-const isMinimized = ref(false);
+const isMinimized = ref(true);
 const activeTab = ref('text'); // 'text' | 'image' | 'catalog'
+
+const toggleMinimize = () => {
+    isMinimized.value = !isMinimized.value;
+};
 
 const panelX = ref(0);
 const panelY = ref(0);
@@ -30,11 +34,12 @@ const startDrag = (event) => {
     startPanelX.value = panelX.value;
     startPanelY.value = panelY.value;
 
-    window.addEventListener('mousemove', onDrag);
-    window.addEventListener('mouseup', stopDrag);
+    try {
+        event.currentTarget.setPointerCapture(event.pointerId);
+    } catch (e) {}
 };
 
-const onDrag = (event) => {
+const handleDrag = (event) => {
     if (!isDragging.value) return;
     const deltaX = event.clientX - dragStartX.value;
     const deltaY = event.clientY - dragStartY.value;
@@ -42,16 +47,15 @@ const onDrag = (event) => {
     panelY.value = startPanelY.value + deltaY;
 };
 
-const stopDrag = () => {
+const stopDrag = (event) => {
+    if (!isDragging.value) return;
     isDragging.value = false;
-    window.removeEventListener('mousemove', onDrag);
-    window.removeEventListener('mouseup', stopDrag);
+    try {
+        if (event?.currentTarget?.hasPointerCapture?.(event.pointerId)) {
+            event.currentTarget.releasePointerCapture(event.pointerId);
+        }
+    } catch (e) {}
 };
-
-onBeforeUnmount(() => {
-    window.removeEventListener('mousemove', onDrag);
-    window.removeEventListener('mouseup', stopDrag);
-});
 
 // ============================================================
 // RETRIEVAL STATE (PS 2.2.1)
@@ -169,56 +173,132 @@ onMounted(() => {
 
 <template>
     <div
-        class="fixed z-[120] bg-gray-900/95 backdrop-blur-xl border border-cyan-500/60 rounded-xl shadow-2xl text-gray-200 transition-shadow duration-200 flex flex-col overflow-hidden"
+        class="semantic-retrieval-panel
+               bg-gray-900/95
+               border border-cyan-500/40
+               rounded-xl
+               shadow-2xl
+               p-4
+               text-white
+               flex flex-col"
+        :class="{
+            'is-minimized': isMinimized
+        }"
         :style="{
-            top: '80px',
-            left: '20px',
-            transform: `translate(${panelX}px, ${panelY}px)`,
-            width: isMinimized ? '340px' : '620px',
-            maxHeight: isMinimized ? 'auto' : '88vh'
+            transform: `translate(${panelX}px, ${panelY}px)`
         }"
     >
-        <!-- DRAGGABLE HEADER -->
+        <!-- ==================================================
+             HEADER / DRAG HANDLE
+             ================================================== -->
         <div
-            @mousedown="startDrag"
-            class="px-4 py-2.5 bg-gradient-to-r from-gray-800 via-gray-900 to-gray-800 border-b border-cyan-500/40 flex items-center justify-between cursor-move select-none"
+            class="panel-drag-handle
+                   flex
+                   items-center
+                   justify-between
+                   gap-2"
+            :class="{
+                'mb-4': !isMinimized
+            }"
+            @pointerdown.prevent="startDrag"
+            @pointermove="handleDrag"
+            @pointerup="stopDrag"
+            @pointercancel="stopDrag"
         >
-            <div class="flex items-center gap-2">
-                <span class="text-lg">🛰️</span>
-                <div>
-                    <h3 class="text-xs font-black text-white tracking-wider uppercase flex items-center gap-1.5">
+            <!-- LEFT -->
+            <div class="flex items-center gap-2 min-w-0">
+                <!-- Drag Grip Icon -->
+                <svg
+                    class="w-4 h-4 text-gray-500 flex-shrink-0"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M8 7h8M8 12h8M8 17h8"
+                    />
+                </svg>
+
+                <span class="text-base flex-shrink-0">🛰️</span>
+
+                <div class="min-w-0">
+                    <h2 class="text-lg font-bold text-cyan-300 truncate flex items-center gap-1.5">
                         <span>Semantic Retrieval</span>
-                        <span class="text-[9px] px-1.5 py-0.2 rounded bg-cyan-950 text-cyan-400 font-mono border border-cyan-700/60">
+                        <span class="text-[9px] px-1.5 py-0.5 rounded bg-cyan-950 text-cyan-400 font-mono border border-cyan-700/60 flex-shrink-0">
                             PS 2.2.1
                         </span>
-                    </h3>
-                    <p v-if="!isMinimized" class="text-[10px] text-gray-400 font-mono">
+                    </h2>
+                    <p v-if="!isMinimized" class="text-xs text-gray-400 font-mono mt-1 truncate">
                         CLIP Vision-Language Model · CUDA Accelerated
                     </p>
                 </div>
             </div>
 
-            <!-- Controls -->
-            <div class="flex items-center gap-1">
+            <!-- RIGHT -->
+            <div class="flex items-center gap-2 flex-shrink-0">
+                <!-- Minimize / Restore -->
                 <button
-                    @click="isMinimized = !isMinimized"
-                    class="p-1 hover:bg-gray-700 text-gray-400 hover:text-white rounded transition text-xs font-bold"
-                    :title="isMinimized ? 'Expand' : 'Minimize'"
+                    type="button"
+                    @pointerdown.stop
+                    @click.stop="toggleMinimize"
+                    class="w-7
+                           h-7
+                           flex
+                           items-center
+                           justify-center
+                           rounded-md
+                           text-gray-300
+                           hover:text-white
+                           hover:bg-gray-700
+                           transition"
+                    :title="
+                        isMinimized
+                            ? 'Restore panel'
+                            : 'Minimize panel'
+                    "
                 >
-                    {{ isMinimized ? '▢' : '—' }}
-                </button>
-                <button
-                    @click="$emit('close')"
-                    class="p-1 hover:bg-red-900/80 text-gray-400 hover:text-red-300 rounded transition text-xs font-bold"
-                    title="Close"
-                >
-                    ✕
+                    <!-- MINUS -->
+                    <svg
+                        v-if="!isMinimized"
+                        class="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M5 12h14"
+                        />
+                    </svg>
+
+                    <!-- PLUS -->
+                    <svg
+                        v-else
+                        class="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M12 5v14M5 12h14"
+                        />
+                    </svg>
                 </button>
             </div>
         </div>
 
-        <!-- MAIN BODY (EXPANDED) -->
-        <div v-show="!isMinimized" class="p-4 space-y-4 overflow-y-auto max-h-[calc(88vh-50px)]">
+        <!-- ==================================================
+             PANEL CONTENT
+             ================================================== -->
+        <div v-if="!isMinimized" class="flex-1 space-y-4 overflow-y-auto min-h-0 pr-1">
 
             <!-- MODE SELECTOR TABS -->
             <div class="grid grid-cols-3 gap-1 bg-gray-800/90 p-1 rounded-lg border border-gray-700 text-xs">
@@ -463,18 +543,65 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.overflow-y-auto::-webkit-scrollbar {
+.semantic-retrieval-panel {
+    position: relative;
+    width: 580px;
+    min-width: 360px;
+    max-width: 850px;
+    min-height: 280px;
+    max-height: 85vh;
+    resize: both;
+    overflow: auto;
+    box-sizing: border-box;
+    z-index: 100;
+}
+
+.semantic-retrieval-panel.is-minimized {
+    min-height: auto;
+    height: auto;
+    resize: none;
+}
+
+.panel-drag-handle {
+    cursor: move;
+    user-select: none;
+    touch-action: none;
+}
+
+.panel-drag-handle:active {
+    cursor: grabbing;
+}
+
+.semantic-retrieval-panel::-webkit-resizer {
+    background-color: rgba(6, 182, 212, 0.25);
+    border-radius: 2px;
+}
+
+.semantic-retrieval-panel.is-minimized::-webkit-resizer {
+    display: none;
+}
+
+button,
+input {
+    touch-action: auto;
+}
+
+.overflow-y-auto::-webkit-scrollbar,
+.semantic-retrieval-panel::-webkit-scrollbar {
     width: 5px;
     height: 5px;
 }
-.overflow-y-auto::-webkit-scrollbar-track {
+.overflow-y-auto::-webkit-scrollbar-track,
+.semantic-retrieval-panel::-webkit-scrollbar-track {
     background: #111827;
 }
-.overflow-y-auto::-webkit-scrollbar-thumb {
+.overflow-y-auto::-webkit-scrollbar-thumb,
+.semantic-retrieval-panel::-webkit-scrollbar-thumb {
     background: #374151;
     border-radius: 3px;
 }
-.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+.overflow-y-auto::-webkit-scrollbar-thumb:hover,
+.semantic-retrieval-panel::-webkit-scrollbar-thumb:hover {
     background: #4b5563;
 }
 </style>

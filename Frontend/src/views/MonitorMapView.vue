@@ -33,12 +33,6 @@ const alertFeatures = ref([]);
 const showVizPanel = ref(false);
 const activeAoiDetails = ref(null);
 
-// PS 2.2.1 Semantic Retrieval Console
-const showSemanticPanel = ref(false);
-const toggleSemanticPanel = () => {
-  showSemanticPanel.value = !showSemanticPanel.value;
-};
-
 const mapKey = ref(0);
 
 const alertTimeRange = ref({
@@ -355,7 +349,7 @@ const fetchAlertsForAoi = async (aoiId) => {
 
 
       <!-- ====================================================
-           PS 2.2.1: SEMANTIC RETRIEVAL TRIGGER & PANEL
+           PS 2.2.1: SEMANTIC RETRIEVAL PANEL
            ==================================================== -->
       <div
         class="absolute
@@ -363,26 +357,8 @@ const fetchAlertsForAoi = async (aoiId) => {
                left-4
                z-[100]"
       >
-        <button
-          @click="toggleSemanticPanel"
-          class="px-4 py-2.5 rounded-xl font-bold text-xs shadow-2xl flex items-center gap-2 border transition-all duration-200 transform active:scale-95 backdrop-blur-md"
-          :class="showSemanticPanel
-            ? 'bg-cyan-600 text-white border-cyan-400 ring-2 ring-cyan-500/50'
-            : 'bg-gray-900/90 text-cyan-300 hover:text-white hover:bg-gray-800 border-cyan-500/40'"
-          title="Open Semantic & Multimodal Retrieval Console (PS 2.2.1)"
-        >
-          <span class="text-base">🛰️</span>
-          <span>Semantic Retrieval</span>
-          <span class="text-[9px] px-1.5 py-0.5 rounded bg-cyan-950 text-cyan-300 font-mono border border-cyan-700/60">
-            PS 2.2.1
-          </span>
-        </button>
+        <SemanticRetrievalPanel />
       </div>
-
-      <SemanticRetrievalPanel
-        v-if="showSemanticPanel"
-        @close="showSemanticPanel = false"
-      />
 
     </div>
 

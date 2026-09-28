@@ -134,9 +134,9 @@ export class AlertsService {
 
         // Construct standard Defence Military Intelligence Dossier / SITREP
         return {
-            dossier_id: `DOSSIER-GARUDA-${row.alert_id}-${Date.now().toString(36).toUpperCase()}`,
+            dossier_id: `DOSSIER-GAGANDHRISTI-${row.alert_id}-${Date.now().toString(36).toUpperCase()}`,
             classification: "SECRET // RESTRICTED - DEFENCE SPACE AGENCY",
-            mission_title: "GARUDA SATELLITE MULTI-TEMPORAL CHANGE SURVEILLANCE",
+            mission_title: "GAGANDHRISTI SATELLITE MULTI-TEMPORAL CHANGE SURVEILLANCE",
             generated_at: new Date().toISOString(),
             alert_id: row.alert_id,
             target_aoi: {

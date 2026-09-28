@@ -61,7 +61,7 @@ const submitAuth = async () => {
 
 <template>
   <div class="login-container max-w-sm mx-auto p-8 mt-20 bg-gray-800 rounded-xl shadow-2xl text-white">
-    <h2 class="text-3xl font-bold mb-6 text-center text-cyan-400">{{ isSigningUp ? 'Sign Up' : 'Login' }} to Gagan-Dhristi </h2>
+    <h2 class="text-3xl font-bold mb-6 text-center text-cyan-400">{{ isSigningUp ? 'Sign Up' : 'Login' }} to Gagandhristi</h2>
     <form @submit.prevent="submitAuth">
         
       <p v-if="errorMessage" :class="[

@@ -746,7 +746,7 @@ watch(availableChannels, (newChannels) => {
                 <div class="flex items-center gap-2">
                     <span class="text-amber-400 text-lg">🛡️</span>
                     <span class="text-xs font-mono text-amber-400 tracking-wider font-bold">
-                        GARUDA DEFENCE INTELLIGENCE SYSTEM
+                        GAGANDHRISTI DEFENCE INTELLIGENCE SYSTEM
                     </span>
                 </div>
                 <div class="flex items-center gap-3">

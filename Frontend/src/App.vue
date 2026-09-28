@@ -98,15 +98,17 @@ const profileInitials = computed(() => {
     <div id="splash-screen" class="fixed inset-0 flex flex-col justify-center items-center z-50 transition-opacity duration-500" style="background-color: var(--bg-color);">
         <div class="text-4xl font-extrabold tracking-widest flex items-center space-x-4" style="color: var(--text-color);">
             <div class="h-40 w-40 bg-cyan-100 rounded-full flex items-center justify-center text-white text-3xl">
-              <img src="@/assets/gagan-drishti.png" alt="Gagan-Dhristi" class="h-[7vh] w-auto">
+              <img src="@/assets/gagan-drishti.png" alt="Gagandhristi" class="h-[7vh] w-auto">
             </div> 
         </div>
-        <p class="mt-4 text-sm tracking-wider" style="color: var(--accent-color);"><b>G</b>eospatial <b>Ar</b>ea Monitoring with <b>U</b>nified <b>D</b>ata <b>A</b>nalytics</p>
+        <p class="mt-4 text-xs tracking-wider text-center max-w-2xl px-4 font-mono" style="color: var(--accent-color);">
+            <b class="text-cyan-400">G</b>eospatial <b class="text-cyan-400">A</b>nalysis & <b class="text-cyan-400">G</b>round <b class="text-cyan-400">A</b>nomaly <b class="text-cyan-400">N</b>etwork · <b class="text-cyan-400">D</b>eep <b class="text-cyan-400">H</b>igh-Resolution <b class="text-cyan-400">R</b>emote <b class="text-cyan-400">I</b>ntelligence for <b class="text-cyan-400">S</b>urveillance & <b class="text-cyan-400">T</b>actical <b class="text-cyan-400">I</b>nspection
+        </p>
     </div>
     
     <div v-if="showNavbar" class="w-full px-4 py-1 flex justify-between items-center z-[1000] shadow-md" style="background-color: var(--container-bg); border-bottom: 1px solid var(--header-border); height: 9vh;">        
         <div class="flex items-center space-x-2 cursor-pointer" @click="goToHome">
-             <img src="@/assets/gagan-drishti.png" alt="Gagan-Dhristi" class="h-[6vh] w-auto">
+             <img src="@/assets/gagan-drishti.png" alt="Gagandhristi" class="h-[6vh] w-auto">
         </div>
         
         <div class="flex items-center space-x-3">
